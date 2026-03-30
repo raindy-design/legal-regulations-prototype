@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>法律法规库 - App法律法规列表</title>
+  <style>
+    :root{
+      --bg:#edf3fb;--card:#fff;--line:#e4ecf5;--text:#101828;--muted:#667085;
+      --primary:#1677ff;--primary-weak:#eaf3ff;--shadow:0 14px 32px rgba(15,23,42,.08);--safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .phone{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(96px + var(--safe-bottom))}
+    .topbar{display:flex;align-items:center;gap:10px;padding:4px 2px 14px}
+    .back,.search-btn,.action-btn{border:0}
+    .back{width:40px;height:40px;border-radius:14px;background:#fff;box-shadow:var(--shadow);font-size:18px}
+    .title{flex:1;min-width:0}.title h1{margin:0;font-size:21px}
+    .search-wrap{
+      position:sticky;top:0;z-index:20;padding-bottom:10px;
+      background:linear-gradient(180deg, rgba(237,243,251,.96), rgba(237,243,251,.8), rgba(237,243,251,0));backdrop-filter:blur(10px);
+    }
+    .search-shell{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:8px;display:grid;gap:8px}
+    .search-row{display:flex;gap:8px;align-items:center}
+    .search-input{flex:1;height:44px;border-radius:14px;background:#f4f6fa;display:flex;align-items:center;gap:8px;padding:0 6px 0 14px}
+    .search-input span{font-size:16px;color:#98a2b3}
+    .search-input input{flex:1;border:0;background:transparent;outline:none;font-size:14px;color:var(--text)}
+    .search-btn{width:36px;height:36px;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;flex-shrink:0;cursor:pointer}
+    .toolbar{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}
+    .toolbar::-webkit-scrollbar{display:none}
+    .sheet-btn,.active-chip{
+      height:34px;padding:0 12px;border:0;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;
+    }
+    .sheet-btn{background:var(--primary-weak);color:var(--primary)}
+    .active-chip{display:inline-flex;align-items:center;border:1px dashed #bfd8ff;background:#f7fbff;color:#365b99}
+    .hero{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin-top:14px}
+    .hero h2{margin:6px 0 8px;font-size:22px;font-weight:700}
+    .hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .stat{padding:14px;border-radius:16px;background:#f8fbff;border:1px solid var(--line)}.stat strong{display:block;margin-top:4px;font-size:22px}
+    .stat-link:hover{background:#eaf3ff;border-color:#cfe0ff;}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 12px}.section-head h3{margin:0;font-size:17px;font-weight:700;color:var(--text)}.section-head span{font-size:12px;color:var(--muted)}
+    .list{display:grid;gap:12px}
+    .doc-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
+    .doc-top{display:flex;gap:10px;align-items:flex-start}
+    .doc-main{flex:1;min-width:0}
+    .doc-title{margin:0;font-size:17px;line-height:1.5}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .tag{height:24px;padding:0 10px;border-radius:999px;background:var(--primary-weak);color:var(--primary);display:inline-flex;align-items:center;font-size:12px;font-weight:700}
+    .summary{margin:0;color:#667085;font-size:14px;line-height:1.8}
+    .card-actions{display:flex;gap:10px}
+    .action-btn{height:38px;padding:0 14px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:13px}
+    .action-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+    .load-more{display:flex;justify-content:center;margin-top:16px}
+    .load-more-btn{height:42px;padding:0 28px;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);font-size:14px;color:var(--primary);font-weight:600;cursor:pointer;}
+    .load-more-btn:disabled{color:var(--muted);cursor:default;box-shadow:none;}
+    .sheet-mask{position:fixed;inset:0;background:rgba(15,23,42,.34);opacity:0;pointer-events:none;transition:.22s ease;z-index:50}
+    .sheet{
+      position:fixed;left:0;right:0;bottom:0;transform:translateY(100%);transition:.22s ease;background:#fff;border-radius:24px 24px 0 0;
+      padding:14px 14px calc(20px + var(--safe-bottom));box-shadow:0 -24px 40px rgba(15,23,42,.12);z-index:60;max-width:430px;margin:0 auto;
+    }
+    .sheet.show{transform:translateY(0)}.sheet-mask.show{opacity:1;pointer-events:auto}
+    .sheet-bar{width:42px;height:5px;border-radius:999px;background:#d0d5dd;margin:0 auto 14px}
+    .sheet h3{margin:0 0 14px;font-size:18px}
+    .sheet-group{display:grid;gap:10px;margin-bottom:14px}
+    .sheet-group label{font-size:13px;color:var(--muted)}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;font-size:12px}
+    .chip.active{background:var(--primary-weak);border-color:#cfe0ff;color:var(--primary);font-weight:700}
+    .sheet-actions{display:flex;gap:10px;margin-top:8px}
+    .sheet-actions button{flex:1;height:44px;border-radius:14px;border:0}
+    .reset-btn{background:#f3f4f6;color:#344054}.apply-btn{background:var(--primary);color:#fff}
+    .toast{
+      position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:rgba(15,23,42,.92);color:#fff;
+      padding:12px 16px;border-radius:14px;font-size:13px;opacity:0;pointer-events:none;transition:.22s ease;z-index:80;white-space:nowrap;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back" onclick="location.href='legal-regulations-app-home.html'">←</button>
+      <div class="title">
+        <h1>法律法规列表</h1>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>法律法规列表</h2>
+      <div class="hero-stats">
+        <div class="stat"><span>文件总量</span><strong>1,286</strong></div>
+        <div class="stat stat-link" id="weekUpdateStat" style="cursor:pointer;">
+          <span>本周更新</span>
+          <strong style="color:var(--primary);">12</strong>
+          <div style="font-size:11px;color:var(--primary);margin-top:2px;">点击查看 →</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="search-wrap" style="position:static;padding-top:14px;padding-bottom:0;background:none;backdrop-filter:none;">
+      <div class="search-shell">
+        <div class="search-row">
+          <label class="search-input">
+            <span>⌕</span>
+            <input id="searchInput" placeholder="请输入法规名称、文号、关键词">
+            <button class="search-btn" id="searchBtn">⌕</button>
+          </label>
+        </div>
+        <div class="toolbar">
+          <button class="sheet-btn" id="filterEntryBtn">筛选条件</button>
+          <div class="active-chip" id="typeIndicator">类型：全部</div>
+          <div class="active-chip" id="orgIndicator">机构：全部</div>
+          <div class="active-chip" id="timeIndicator">时间：全部</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h3>检索结果</h3>
+      <span id="resultCount">共找到 0 条</span>
+    </div>
+
+    <section class="list" id="list"></section>
+
+    <div class="load-more" id="loadMoreWrap">
+      <button class="load-more-btn" id="loadMoreBtn">加载更多</button>
+    </div>
+  </div>
+
+  <div class="sheet-mask" id="sheetMask"></div>
+  <div class="sheet" id="filterSheet">
+    <div class="sheet-bar"></div>
+    <h3>筛选条件</h3>
+    <div class="sheet-group"><label>文件类型</label><div class="chips" id="typeChips"></div></div>
+    <div class="sheet-group"><label>发布机构</label><div class="chips" id="orgChips"></div></div>
+    <div class="sheet-group"><label>发布时间</label><div class="chips" id="timeChips"></div></div>
+    <div class="sheet-actions">
+      <button class="reset-btn" id="resetFiltersBtn">重置</button>
+      <button class="apply-btn" id="applyFiltersBtn">应用筛选</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const docs = [
+      { title:"金属非金属地下矿山安全规程", type:"法律法规", org:"国家标准", time:"近7天", date:"2026-03-24", views:"1,862", summary:"规范地下矿山生产组织、通风、运输、提升、爆破、机电管理等核心安全要求，适用于地下矿山企业安全生产管理和日常合规执行。", detail:"legal-regulations-app-document-detail.html" },
+      { title:"地下矿山重大事故隐患判定标准（2026版）", type:"部门规章", org:"应急管理部", time:"近30天", date:"2026-03-18", views:"2,104", summary:"围绕地下矿山主要系统、关键环节和重大风险点给出重大事故隐患判定依据，可用于企业自查、监管检查和整改闭环管理。", detail:"legal-regulations-app-document-detail.html" },
+      { title:"关于进一步加强地下矿山安全生产工作的指导意见", type:"国家政策", org:"国家矿山安全监察局", time:"近30天", date:"2026-03-22", views:"1,536", summary:"从风险分级管控、隐患排查治理、现场安全管理、应急处置和数字化监管等方面提出地下矿山安全生产提升要求。", detail:"legal-regulations-app-document-detail.html" },
+      { title:"地下矿山通风安全管理规定", type:"行政法规", org:"行业主管部门", time:"2026年", date:"2026-03-02", views:"978", summary:"重点针对地下矿山通风系统布置、风量监测、通风设施运行及异常情况处置提出管理要求，支撑安全稳定生产。", detail:"legal-regulations-app-document-detail.html" }
+    ];
+    const filters = {
+      type: ["全部", "法律法规", "行政法规", "部门规章", "国家政策"],
+      org: ["全部", "国家矿山安全监察局", "应急管理部", "国务院安委会办公室", "国家标准", "行业主管部门"],
+      time: ["全部", "近7天", "近30天", "2026年"]
+    };
+    const state = {
+      q: new URLSearchParams(location.search).get("q") || "",
+      type: "全部",
+      org: "全部",
+      time: "全部",
+      page: 1,
+      pageSize: 4
+    };
+    const listEl = document.getElementById("list");
+    const resultCountEl = document.getElementById("resultCount");
+    const toastEl = document.getElementById("toast");
+    const searchInput = document.getElementById("searchInput");
+    const sheet = document.getElementById("filterSheet");
+    const mask = document.getElementById("sheetMask");
+    searchInput.value = state.q;
+    function showToast(text){toastEl.textContent=text;toastEl.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toastEl.classList.remove("show"),2200);}
+    function renderChipGroup(containerId, key){
+      const container = document.getElementById(containerId);
+      container.innerHTML = filters[key].map((item) => `<button class="chip ${state[key] === item ? "active" : ""}" data-key="${key}" data-value="${item}">${item}</button>`).join("");
+    }
+    function updateIndicators(){
+      document.getElementById("typeIndicator").textContent = `类型：${state.type}`;
+      document.getElementById("orgIndicator").textContent = `机构：${state.org}`;
+      document.getElementById("timeIndicator").textContent = `时间：${state.time}`;
+    }
+    function filteredDocs(){
+      return docs.filter((doc) => {
+        const qOk = !state.q || `${doc.title}${doc.summary}${doc.org}`.includes(state.q);
+        const typeOk = state.type === "全部" || doc.type === state.type;
+        const orgOk = state.org === "全部" || doc.org === state.org;
+        const timeOk = state.time === "全部" || doc.time === state.time;
+        return qOk && typeOk && orgOk && timeOk;
+      });
+    }
+    function renderList(reset){
+      if(reset) state.page = 1;
+      const data = filteredDocs();
+      resultCountEl.textContent = `共找到 ${data.length} 条`;
+      const visible = data.slice(0, state.page * state.pageSize);
+      const makeCard = (doc) => `
+        <article class="doc-card">
+          <div class="doc-top">
+            <div class="doc-main">
+              <h4 class="doc-title">${doc.title}</h4>
+              <div class="meta">
+                <span class="tag">${doc.type}</span>
+                <span>${doc.org}</span>
+                <span>${doc.date}</span>
+                <span>${doc.views}</span>
+              </div>
+            </div>
+          </div>
+          <p class="summary">${doc.summary}</p>
+          <div class="card-actions">
+            <button class="action-btn primary" data-detail="${doc.detail}">详情</button>
+          </div>
+        </article>
+      `;
+      listEl.innerHTML = visible.length
+        ? visible.map(makeCard).join("")
+        : `<article class="doc-card"><h4 class="doc-title">未找到匹配结果</h4><p class="summary">可以尝试清空筛选条件，或使用更宽泛的关键词重新搜索。</p></article>`;
+      const btn = document.getElementById("loadMoreBtn");
+      if(visible.length >= data.length){ btn.textContent="已全部加载"; btn.disabled=true; }
+      else { btn.textContent="加载更多"; btn.disabled=false; }
+    }
+    function openSheet(){
+      renderChipGroup("typeChips", "type");
+      renderChipGroup("orgChips", "org");
+      renderChipGroup("timeChips", "time");
+      sheet.classList.add("show");
+      mask.classList.add("show");
+    }
+    function closeSheet(){ sheet.classList.remove("show"); mask.classList.remove("show"); }
+    renderList(true);
+    updateIndicators();
+    document.getElementById("filterEntryBtn").addEventListener("click", openSheet);
+    mask.addEventListener("click", closeSheet);
+    document.getElementById("applyFiltersBtn").addEventListener("click", () => { updateIndicators(); renderList(true); closeSheet(); showToast("筛选条件已更新"); });
+    document.getElementById("resetFiltersBtn").addEventListener("click", () => {
+      state.type = "全部"; state.org = "全部"; state.time = "全部";
+      renderChipGroup("typeChips", "type"); renderChipGroup("orgChips", "org"); renderChipGroup("timeChips", "time");
+    });
+    sheet.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if (!chip) return;
+      state[chip.dataset.key] = chip.dataset.value;
+      renderChipGroup("typeChips", "type"); renderChipGroup("orgChips", "org"); renderChipGroup("timeChips", "time");
+    });
+    document.getElementById("searchBtn").addEventListener("click", () => { state.q = searchInput.value.trim(); renderList(true); showToast(`已搜索关键词：${state.q || "全部"}`); });
+    searchInput.addEventListener("keydown", (e) => { if (e.key === "Enter") document.getElementById("searchBtn").click(); });
+    document.getElementById("weekUpdateStat").addEventListener("click", () => {
+      state.time = "近7天";
+      updateIndicators();
+      renderList(true);
+      showToast("已筛选：本周更新");
+      document.getElementById("list").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("loadMoreBtn").addEventListener("click", () => {
+      state.page++;
+      renderList(false);
+    });
+    listEl.addEventListener("click", (e) => {
+      const detail = e.target.closest("[data-detail]");
+      if (detail) location.href = detail.dataset.detail;
+    });
+  </script>
+</body>
+</html>
