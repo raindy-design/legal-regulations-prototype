@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>法律法规库 - App最新发布</title>
+  <style>
+    :root{
+      --bg:#edf3fb;--card:#fff;--line:#e4ecf5;--text:#101828;--muted:#667085;
+      --primary:#1677ff;--primary-weak:#eaf3ff;--shadow:0 14px 32px rgba(15,23,42,.08);--safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .phone{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(28px + var(--safe-bottom))}
+    .topbar{display:flex;align-items:center;gap:10px;padding:4px 2px 14px}
+    .back{width:40px;height:40px;border-radius:14px;border:0;background:#fff;box-shadow:var(--shadow);font-size:18px;flex-shrink:0}
+    .title{flex:1;min-width:0}.title h1{margin:0;font-size:21px}
+    .hero{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin-top:2px}
+    .hero h2{margin:8px 0 8px;font-size:24px}
+
+    /* ── 时间轴容器 ── */
+    .timeline-wrap{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:20px 18px;margin-top:14px}
+    /* 每个月份区块 */
+    .tl-group{position:relative;padding-left:28px;margin-bottom:28px}
+    .tl-group:last-child{margin-bottom:0}
+
+    /* 左侧竖线 */
+    .tl-group::before{
+      content:'';position:absolute;left:7px;top:28px;bottom:-28px;
+      width:2px;background:var(--line);
+    }
+    .tl-group:last-child::before{display:none}
+
+    /* 月份圆点 */
+    .tl-dot{
+      position:absolute;left:0;top:4px;
+      width:16px;height:16px;border-radius:50%;
+      background:var(--primary);border:3px solid var(--primary-weak);flex-shrink:0;
+    }
+
+    /* 月份标签 */
+    .tl-month{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .tl-month strong{font-size:15px;color:var(--text)}
+    .count{height:22px;padding:0 9px;border-radius:999px;background:var(--primary-weak);color:var(--primary);display:inline-flex;align-items:center;font-size:12px;font-weight:700}
+
+    /* 文档卡片 */
+    .list{display:grid;gap:10px}
+    .doc-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:16px;display:grid;gap:10px}
+    .doc-card h4{margin:0;font-size:16px;line-height:1.5}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .tag{height:22px;padding:0 9px;border-radius:999px;background:var(--primary-weak);color:var(--primary);display:inline-flex;align-items:center;font-size:12px;font-weight:700}
+    .summary{margin:0;color:#667085;font-size:14px;line-height:1.8}
+    .card-actions{display:flex;gap:10px}
+    .action-btn{height:38px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:13px;cursor:pointer}
+    .action-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:rgba(15,23,42,.92);color:#fff;padding:12px 16px;border-radius:14px;font-size:13px;opacity:0;pointer-events:none;transition:.22s ease;z-index:80;white-space:nowrap}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back" onclick="location.href='legal-regulations-app-home.html'">←</button>
+      <div class="title">
+        <h1>最新发布</h1>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>最新发布</h2>
+    </section>
+
+    <!-- 时间轴 -->
+    <div class="timeline-wrap" style="margin-top:14px;">
+
+      <!-- 2026年3月 -->
+      <div class="tl-group">
+        <div class="tl-dot"></div>
+        <div class="tl-month"><strong>2026年3月</strong><span class="count">2 条</span></div>
+        <div class="list">
+          <article class="doc-card">
+            <h4>关于进一步加强地下矿山安全生产工作的指导意见</h4>
+            <div class="meta"><span class="tag">指导意见</span><span>国家矿山安全监察局</span><span>2026-03-22</span><span>1,536</span></div>
+            <p class="summary">从风险分级管控、隐患排查治理、现场安全管理、应急处置和数字化监管等方面提出地下矿山安全生产提升要求。</p>
+            <div class="card-actions">
+              <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">详情</button>
+            </div>
+          </article>
+          <article class="doc-card">
+            <h4>关于开展地下矿山安全生产专项整治行动的通知</h4>
+            <div class="meta"><span class="tag">专项整治</span><span>国务院安委会办公室</span><span>2026-03-18</span><span>1,204</span></div>
+            <p class="summary">围绕通风系统、防治水、机电运输、外包施工和重大隐患治理等重点内容，对专项整治任务进行统一部署。</p>
+            <div class="card-actions">
+              <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">详情</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2024年3月 -->
+      <div class="tl-group">
+        <div class="tl-dot"></div>
+        <div class="tl-month"><strong>2024年3月</strong><span class="count">2 条</span></div>
+        <div class="list">
+          <article class="doc-card">
+            <h4>关于推进安全生产领域改革发展的意见</h4>
+            <div class="meta"><span class="tag">国家政策</span><span>中共中央 国务院</span><span>2024-03-20</span><span>18,500</span></div>
+            <p class="summary">围绕责任落实、风险防控、监管机制和应急管理提出系统性意见。</p>
+            <div class="card-actions">
+              <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">详情</button>
+            </div>
+          </article>
+          <article class="doc-card">
+            <h4>全国安全生产专项整治三年行动计划</h4>
+            <div class="meta"><span class="tag">国家政策</span><span>国务院安委会</span><span>2024-03-18</span><span>16,200</span></div>
+            <p class="summary">围绕专项整治、重点行业和长效机制建设提出系统性部署。</p>
+            <div class="card-actions">
+              <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">详情</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2023年3月 -->
+      <div class="tl-group">
+        <div class="tl-dot"></div>
+        <div class="tl-month"><strong>2023年3月</strong><span class="count">1 条</span></div>
+        <div class="list">
+          <article class="doc-card">
+            <h4>危险化学品安全管理条例</h4>
+            <div class="meta"><span class="tag">行政法规</span><span>国务院</span><span>2023-03-12</span><span>13,600</span></div>
+            <p class="summary">围绕危险化学品生产、储存、经营、运输、使用和处置等环节明确安全管理责任与监管要求。</p>
+            <div class="card-actions">
+              <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">详情</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </div><!-- /timeline-wrap -->
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove("show"),2200);}
+    document.body.addEventListener("click",e=>{
+      const det=e.target.closest("[data-detail]");
+      if(det) location.href=det.dataset.detail;
+    });
+  </script>
+</body>
+</html>
