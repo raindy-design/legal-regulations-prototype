@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法律法规库原型</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        body { background:#edf3fb; color:#1a1a1a; line-height:1.6; padding:24px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; }
+        header { text-align:center; padding:40px 0; }
+        h1 { font-size:48px; margin-bottom:12px; color:#1a1a1a; }
+        .subtitle { font-size:18px; color:#667085; margin-bottom:40px; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px; }
+        .card { background:#fff; border:1px solid #d0d7de; border-radius:24px; padding:28px; box-shadow:0 14px 32px rgba(15,23,42,.08); transition:transform .2s, box-shadow .2s; cursor:pointer; }
+        .card:hover { transform:translateY(-4px); box-shadow:0 20px 40px rgba(15,23,42,.12); }
+        .card h2 { font-size:22px; margin-bottom:8px; color:#1a1a1a; }
+        .card p { color:#667085; font-size:15px; margin-bottom:16px; }
+        .card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
+        .badge { background:#f4f6fa; color:#667085; padding:4px 12px; border-radius:999px; font-size:13px; font-weight:500; }
+        .link { color:#7c3aed; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:4px; }
+        .link::after { content:'→'; }
+        .section { margin:60px 0 32px; }
+        .section h3 { font-size:28px; margin-bottom:20px; }
+        footer { margin-top:80px; text-align:center; color:#98a2b3; font-size:14px; border-top:1px solid #d0d7de; padding-top:32px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 法律法规库原型</h1>
+            <p class="subtitle">矿山安全生产法律法规与隐患库原型系统</p>
+        </header>
+
+        <section class="section">
+            <h3>📱 App 端（移动端）</h3>
+            <div class="grid">
+                <div class="card" onclick="location.href='app/legal-regulations-app-home.html'">
+                    <h2>首页</h2>
+                    <p>App 端主页，包含快捷入口、最近在看、底部导航等移动端交互设计</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='app/legal-regulations-app-list.html'">
+                    <h2>法律法规列表</h2>
+                    <p>法律文件卡片列表，支持筛选条件弹窗、文件详情跳转</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='app/legal-regulations-app-hazard-library.html'">
+                    <h2>隐患库</h2>
+                    <p>隐患风险分级展示，按等级、类别筛选，点击查看详情</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='app/legal-regulations-app-national-policy.html'">
+                    <h2>国家政策</h2>
+                    <p>国家政策列表，标签筛选，卡片详情跳转</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='app/legal-regulations-app-government-info.html'">
+                    <h2>政府信息公开</h2>
+                    <p>按时间排序的政府文件列表，支持时间降序/升序切换</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='app/legal-regulations-app-latest-release.html'">
+                    <h2>最新发布</h2>
+                    <p>时间轴展示最新发布的法规与通知</p>
+                    <div class="card-footer"><span class="badge">移动端</span><span class="link">打开</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>💻 PC 端（桌面端）</h3>
+            <div class="grid">
+                <div class="card" onclick="location.href='legal-regulations-pc-home.html'">
+                    <h2>PC 首页</h2>
+                    <p>桌面端主页，三栏布局，快速入口、热门话题、统计卡片</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='legal-regulations-pc-list.html'">
+                    <h2>PC 法律法规列表</h2>
+                    <p>表格列表形式，支持筛选、搜索、查看详情</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='legal-regulations-pc-hazard-library.html'">
+                    <h2>PC 隐患库</h2>
+                    <p>隐患分级卡片展示，左侧筛选面板</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='legal-regulations-pc-national-policy.html'">
+                    <h2>PC 国家政策</h2>
+                    <p>右侧筛选标签，左侧列表展示</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='legal-regulations-pc-government-info.html'">
+                    <h2>PC 政府信息公开</h2>
+                    <p>时间排序列表，支持切换排序方式</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+                <div class="card" onclick="location.href='legal-regulations-pc-latest-release.html'">
+                    <h2>PC 最新发布</h2>
+                    <p>时间轴布局，按发布时间倒序排列</p>
+                    <div class="card-footer"><span class="badge">桌面端</span><span class="link">打开</span></div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 法律法规库原型 • 设计语言：--bg:#edf3fb --shadow:0 14px 32px rgba(15,23,42,.08)</p>
+            <p style="margin-top:8px; font-size:13px;">本系统为原型演示，所有跳转路径已修复为相对路径，可直接部署到 GitHub Pages / Netlify / Vercel</p>
+        </footer>
+    </div>
+</body>
+</html>
