@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>法律法规库 - App政府信息资讯中心</title>
+  <style>
+    :root{--bg:#edf3fb;--card:#fff;--line:#e4ecf5;--text:#101828;--muted:#667085;--primary:#1677ff;--primary-weak:#eaf3ff;--shadow:0 14px 32px rgba(15,23,42,.08);--safe-bottom:env(safe-area-inset-bottom, 0px)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .phone{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(28px + var(--safe-bottom))}
+    .topbar{display:flex;align-items:center;gap:10px;padding:4px 2px 14px}
+    .back,.sort-btn,.search-btn,.action-btn{border:0}
+    .back{width:40px;height:40px;border-radius:14px;background:#fff;box-shadow:var(--shadow);font-size:18px}
+    .sort-btn{height:34px;padding:0 12px;border-radius:999px;background:#fff;box-shadow:var(--shadow);font-size:12px;font-weight:600;color:var(--primary);white-space:nowrap;cursor:pointer}
+    .title{flex:1}.title h1{margin:0;font-size:21px}
+    .search-shell,.hero,.item{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .search-shell,.hero,.item{padding:18px}
+    .search-shell-wrap{position:sticky;top:0;z-index:20;padding-bottom:10px;background:linear-gradient(180deg,rgba(237,243,251,.96),rgba(237,243,251,.8),rgba(237,243,251,0));backdrop-filter:blur(10px)}
+    .search-shell{border-radius:20px;padding:8px}
+    .hero{border-radius:24px}
+    .item{border-radius:22px}
+    .search-row{display:flex;gap:8px}
+    .search-main{flex:1;height:44px;border-radius:14px;background:#f4f6fa;display:flex;align-items:center;gap:8px;padding:0 6px 0 14px}
+    .search-main input{flex:1;border:0;background:transparent;outline:none;font-size:14px}
+    .search-btn{width:36px;height:36px;border-radius:10px;border:0;background:var(--primary);color:#fff;flex-shrink:0;cursor:pointer}
+    .hero{margin-top:14px}.hero h2{margin:10px 0 8px;font-size:22px;font-weight:700}.hero p,.summary{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .toolbar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-top:14px}.toolbar::-webkit-scrollbar{display:none}
+    .chip{height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;font-size:12px;white-space:nowrap}
+    .chip.active{background:var(--primary-weak);border-color:#cfe0ff;color:var(--primary);font-weight:700}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 12px}.section-head h3{margin:0;font-size:17px;font-weight:700;color:var(--text)}.section-head span{font-size:12px;color:var(--muted)}
+    .list{display:grid;gap:12px}.item{display:grid;gap:12px}.item h4{margin:0;font-size:17px;line-height:1.5}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.attach{margin:0;color:#475467;font-size:13px;line-height:1.7}
+    .actions{display:flex;gap:10px}.action-btn{height:38px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:#fff}.action-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:rgba(15,23,42,.92);color:#fff;padding:12px 16px;border-radius:14px;font-size:13px;opacity:0;pointer-events:none;transition:.22s ease}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back" onclick="location.href='legal-regulations-app-home.html'">←</button>
+      <div class="title"><h1>政府信息资讯中心</h1></div>
+      <button class="sort-btn" id="sortBtn">时间↓</button>
+    </header>
+
+    <section class="hero">
+      <h2>政府信息资讯中心</h2>
+      <p>集中汇聚政府网站公开信息，涵盖统计数据、通知动态、办事指南等内容，便于统一查看和追踪。</p>
+      <div class="search-shell" style="margin-top:14px;padding:8px;border-radius:16px;box-shadow:none;border:1px solid var(--line);">
+        <div class="search-row">
+          <label class="search-main">
+            <span style="color:#98a2b3;">⌕</span>
+            <input id="searchInput" placeholder="搜索政府信息、部门、关键词...">
+            <button class="search-btn" id="searchBtn">⌕</button>
+          </label>
+        </div>
+      </div>
+      <div class="toolbar" id="sourceChips"></div>
+    </section>
+
+    <div class="section-head">
+      <h3>资讯列表</h3>
+      <span id="resultCount">共 0 条</span>
+    </div>
+
+    <section class="list" id="list"></section>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const rows = [
+      { title:"2024年第一季度安全生产统计数据", org:"应急管理部", source:"统计数据", date:"2024-03-25", summary:"2024年第一季度，全国共发生各类生产安全事故数据汇总及重点分析内容。", attach:"附件：统计报表.pdf、图表分析.xlsx" },
+      { title:"关于开展安全生产大检查的通知", org:"国务院安委会办公室", source:"通知动态", date:"2024-03-22", summary:"为切实加强安全生产工作，国务院安委会决定在全国范围内开展安全生产大检查。", attach:"" },
+      { title:"安全生产行政许可办理指南", org:"应急管理部", source:"办事指南", date:"2024-03-20", summary:"为规范安全生产行政许可事项办理，方便企业和群众办事，制定本指南。", attach:"附件：办理流程图.pdf" },
+      { title:"矿山安全监管月度公开通报", org:"国家矿山安全监察局", source:"通知动态", date:"2024-03-18", summary:"对近期矿山安全监管检查情况、典型问题和整改要求进行公开通报。", attach:"附件：公开通报.docx" }
+    ];
+    const sourceOptions = ["全部","统计数据","通知动态","办事指南"];
+    const state = { q:"", source:"全部", desc:true };
+    const sourceEl = document.getElementById("sourceChips");
+    const listEl = document.getElementById("list");
+    const toast = document.getElementById("toast");
+    function showToast(text){toast.textContent=text;toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),2200);}
+    function renderSources(){ sourceEl.innerHTML = sourceOptions.map(item => `<button class="chip ${state.source===item?"active":""}" data-source="${item}">${item}</button>`).join(""); }
+    function data(){
+      let result = rows.filter(row => {
+        const qOk = !state.q || `${row.title}${row.org}${row.summary}`.includes(state.q);
+        const sOk = state.source === "全部" || row.source === state.source;
+        return qOk && sOk;
+      });
+      result = result.sort((a,b)=> state.desc ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date));
+      return result;
+    }
+    function render(){
+      const result = data();
+      document.getElementById("resultCount").textContent = `共 ${result.length} 条`;
+      listEl.innerHTML = result.map(row => `
+        <article class="item">
+          <h4>${row.title}</h4>
+          <div class="meta"><span>${row.date}</span><span>${row.source}</span><span style="color:var(--muted)">来源：${row.org}</span></div>
+          <p class="summary">${row.summary}</p>
+          <div class="actions">
+            <button class="action-btn primary" data-detail="legal-regulations-app-document-detail.html">查看详情</button>
+          </div>
+        </article>
+      `).join("");
+    }
+    renderSources();
+    render();
+    document.getElementById("searchBtn").addEventListener("click", ()=>{state.q=document.getElementById("searchInput").value.trim();render();showToast(`已搜索：${state.q||"全部"}`);});
+    document.getElementById("searchInput").addEventListener("keydown",(e)=>{if(e.key==="Enter")document.getElementById("searchBtn").click();});
+    document.body.addEventListener("click",(e)=>{
+      const source = e.target.closest("[data-source]");
+      const detail = e.target.closest("[data-detail]");
+      if(source){state.source=source.dataset.source;renderSources();render();}
+      if(detail) location.href = detail.dataset.detail;
+    });
+    document.getElementById("sortBtn").addEventListener("click", ()=>{
+      state.desc=!state.desc;
+      document.getElementById("sortBtn").textContent = state.desc ? "时间↓" : "时间↑";
+      render();
+      showToast(state.desc ? "已切换为时间降序" : "已切换为时间升序");
+    });
+  </script>
+</body>
+</html>
