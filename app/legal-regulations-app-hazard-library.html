@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>法律法规库 - App隐患库</title>
+  <style>
+    :root{
+      --bg:#edf3fb;--card:#fff;--line:#e4ecf5;--text:#101828;--muted:#667085;--primary:#1677ff;--primary-weak:#eaf3ff;--shadow:0 14px 32px rgba(15,23,42,.08);
+      --red:#d92d20;--red-bg:#fef3f2;--orange:#f79009;--orange-bg:#fff7ed;--yellow:#ca8a04;--yellow-bg:#fefce8;--blue:#2563eb;--blue-bg:#eff6ff;
+      --safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .phone{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(30px + var(--safe-bottom))}
+    .topbar{display:flex;align-items:center;gap:10px;padding:4px 2px 14px}.back,.filter-btn{width:40px;height:40px;border-radius:14px;border:0;background:#fff;box-shadow:var(--shadow);font-size:18px}
+    .title{flex:1}.title h1{margin:0;font-size:21px}
+    .search-shell,.hero,.card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+    .search-shell{padding:8px;display:grid;gap:8px;position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px)}
+    .search-row{display:flex;gap:8px}.search-input{flex:1;height:44px;border-radius:14px;background:#f4f6fa;display:flex;align-items:center;gap:8px;padding:0 6px 0 14px}.search-input input{flex:1;border:0;background:transparent;outline:none;font-size:14px}
+    .search-btn{width:36px;height:36px;border-radius:10px;border:0;background:var(--primary);color:#fff;flex-shrink:0;cursor:pointer}
+    .toolbar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.toolbar::-webkit-scrollbar{display:none}
+    .chip{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;font-size:12px;white-space:nowrap}
+    .chip.active{background:var(--primary-weak);border-color:#cfe0ff;color:var(--primary);font-weight:700}
+    .hero{padding:12px 14px;margin-top:14px}.hero h2{margin:4px 0 8px;font-size:18px;font-weight:700}.hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .stats{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none}.stats::-webkit-scrollbar{display:none}.stat{flex:1;min-width:0;padding:10px 6px;border-radius:12px;background:#f8fbff;border:1px solid var(--line);text-align:center}.stat span{font-size:11px;color:var(--muted);white-space:nowrap}.stat strong{display:block;margin-top:4px;font-size:16px}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 12px}.section-head h3{margin:0;font-size:17px;font-weight:700;color:var(--text)}.section-head span{font-size:12px;color:var(--muted)}
+    .list{display:grid;gap:12px}.item{padding:16px;display:grid;gap:12px}.item h4{margin:0;font-size:17px;line-height:1.45}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}.level,.tag{height:28px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12px;font-weight:700}
+    .red{background:var(--red-bg);color:var(--red)}.orange{background:var(--orange-bg);color:var(--orange)}.yellow{background:var(--yellow-bg);color:var(--yellow)}.blue{background:var(--blue-bg);color:var(--blue)}
+    .tag{background:#f2f4f7;color:#344054;font-weight:600}.summary{margin:0;color:#667085;font-size:14px;line-height:1.8}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .action-btn{height:38px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:#fff}.action-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:rgba(15,23,42,.92);color:#fff;padding:12px 16px;border-radius:14px;font-size:13px;opacity:0;pointer-events:none;transition:.22s ease}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back" onclick="location.href='legal-regulations-app-home.html'">←</button>
+      <div class="title"><h1>隐患库</h1></div>
+
+    </header>
+
+    <section class="hero">
+      <h2>隐患库</h2>
+      <div class="stats">
+        <div class="stat"><span>隐患总量</span><strong>256</strong></div>
+        <div class="stat" style="background:var(--red-bg);border-color:#fecdca"><span>重大风险</span><strong style="color:var(--red)">18</strong></div>
+        <div class="stat" style="background:var(--orange-bg);border-color:#fdd";><span>较大风险</span><strong style="color:var(--orange)">42</strong></div>
+        <div class="stat" style="background:var(--yellow-bg);border-color:#fef08a"><span>一般风险</span><strong style="color:var(--yellow)">128</strong></div>
+        <div class="stat" style="background:var(--blue-bg);border-color:#bfdbfe"><span>低风险</span><strong style="color:var(--blue)">68</strong></div>
+      </div>
+    </section>
+
+    <section class="search-shell" style="margin-top:12px;position:static;backdrop-filter:none;">
+      <div class="search-row">
+        <label class="search-input">
+          <span style="color:#98a2b3;">⌕</span>
+          <input id="searchInput" placeholder="搜索安全隐患，例如：高空作业">
+          <button class="search-btn" id="searchBtn">⌕</button>
+        </label>
+      </div>
+      <div class="toolbar" id="levelChips"></div>
+      <div class="toolbar" id="typeChips"></div>
+    </section>
+
+    <div class="section-head">
+      <h3>详情列表</h3>
+      <span id="resultCount">共找到 0 条</span>
+    </div>
+
+    <section class="list" id="list"></section>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const items = [
+      { title:"高空作业未系安全带", level:"重大风险", levelClass:"red", type:"施工安全", date:"2024-03-15", clause:"3 条", summary:"工作人员未按规定佩戴和正确使用安全带，存在高处坠落重大风险。", action:"规范佩戴安全带，落实高挂低用，安排现场监护并开展作业前检查。", detail:"legal-regulations-app-hazard-detail.html" },
+      { title:"危险化学品储存不当", level:"较大风险", levelClass:"orange", type:"化学品安全", date:"2024-03-10", clause:"4 条", summary:"危险化学品未按照性质分类存储，存在混放、标识不清、通风不足等情况。", action:"按性质分区储存，设置明显标识，完善通风条件并配备消防器材。", detail:"legal-regulations-app-hazard-detail.html" },
+      { title:"消防通道堵塞", level:"一般风险", levelClass:"yellow", type:"消防安全", date:"2024-03-08", clause:"2 条", summary:"消防通道被杂物、车辆等堵塞，影响紧急情况下的疏散和救援效率。", action:"定期检查消防通道，设置禁止堆塞标识，加强巡查并及时纠正违规行为。", detail:"legal-regulations-app-hazard-detail.html" },
+      { title:"特种设备未按期检验", level:"低风险", levelClass:"blue", type:"设备安全", date:"2024-03-01", clause:"2 条", summary:"起重机械、压力容器等特种设备超过检验周期未完成年度检测或定期检验。", action:"建立检验预警机制，明确责任人和检验周期，及时补做检测并留存记录。", detail:"legal-regulations-app-hazard-detail.html" }
+    ];
+    const state = { q:"", level:"全部", type:"全部" };
+    const levelOptions = ["全部","重大风险","较大风险","一般风险","低风险"];
+    const typeOptions = ["全部","施工安全","化学品安全","消防安全","设备安全"];
+    const levelEl = document.getElementById("levelChips");
+    const typeEl = document.getElementById("typeChips");
+    const listEl = document.getElementById("list");
+    const toast = document.getElementById("toast");
+    function showToast(text){toast.textContent=text;toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),2200);}
+    function renderChips(container, options, key){ container.innerHTML = options.map(item => `<button class="chip ${state[key]===item?"active":""}" data-key="${key}" data-value="${item}">${item}</button>`).join(""); }
+    function data(){
+      return items.filter(item => {
+        const qOk = !state.q || `${item.title}${item.summary}${item.type}`.includes(state.q);
+        const lOk = state.level === "全部" || item.level === state.level;
+        const tOk = state.type === "全部" || item.type === state.type;
+        return qOk && lOk && tOk;
+      });
+    }
+    function renderList(){
+      const rows = data();
+      document.getElementById("resultCount").textContent = `共找到 ${rows.length} 条`;
+      listEl.innerHTML = rows.map(item => `
+        <article class="card item">
+          <h4>${item.title}</h4>
+          <div class="badges"><span class="level ${item.levelClass}">${item.level}</span><span class="tag">${item.type}</span></div>
+          <p class="summary"><strong>隐患描述：</strong>${item.summary}<br><strong>管理措施：</strong>${item.action}</p>
+          <div class="meta"><span>类别：${item.type}</span><span>录入日期：${item.date}</span><span>关联条款：${item.clause}</span></div>
+          <div><button class="action-btn primary" data-detail="${item.detail}">查看详情</button></div>
+        </article>
+      `).join("") || `<article class="card item"><h4>未找到匹配隐患</h4><p class="summary">可尝试更换关键词或重置筛选条件后重新查看。</p></article>`;
+    }
+    renderChips(levelEl, levelOptions, "level"); renderChips(typeEl, typeOptions, "type"); renderList();
+    document.getElementById("searchBtn").addEventListener("click", ()=>{state.q=document.getElementById("searchInput").value.trim();renderList();showToast(`已搜索：${state.q||"全部"}`);});
+    document.getElementById("searchInput").addEventListener("keydown",(e)=>{if(e.key==="Enter")document.getElementById("searchBtn").click();});
+    document.body.addEventListener("click",(e)=>{
+      const chip = e.target.closest(".chip");
+      const detail = e.target.closest("[data-detail]");
+      if(chip){ state[chip.dataset.key]=chip.dataset.value; renderChips(levelEl, levelOptions, "level"); renderChips(typeEl, typeOptions, "type"); renderList(); }
+      if(detail){ location.href = detail.dataset.detail; }
+    });
+  </script>
+</body>
+</html>
