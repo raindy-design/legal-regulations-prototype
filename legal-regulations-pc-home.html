@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法律法规库 - PC首页</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --line: #e7edf5;
+      --text: #1f2a37;
+      --muted: #667085;
+      --primary: #1677ff;
+      --primary-deep: #0f5ed7;
+      --teal: #14b8a6;
+      --navy: #0f172a;
+      --tag: #eef4ff;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      min-width: 1440px;
+    }
+
+    .topbar {
+      height: 72px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 260px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1677ff, #14b8a6);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ghost-btn,
+    .primary-btn,
+    .link-btn {
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 14px;
+    }
+
+    .ghost-btn {
+      padding: 10px 14px;
+      background: #eef4ff;
+      color: var(--primary);
+    }
+
+    .ghost-btn:hover,
+    .primary-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--primary-deep);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 18px;
+    }
+
+    .user-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(160deg, #0f172a, #113767);
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .user-card small {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.7;
+    }
+
+    .user-card small {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 14px;
+      color: #344054;
+      cursor: pointer;
+    }
+
+    .menu-item.active {
+      background: #eaf3ff;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .menu-item:hover {
+      background: #f6f9fc;
+    }
+
+    .main {
+      display: grid;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .intro-search {
+      display: grid;
+      gap: 22px;
+      padding: 6px 0 2px;
+    }
+
+    .intro-title {
+      margin: 0;
+      font-size: 60px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-desc {
+      margin: 10px 0 0;
+      color: #667085;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .search-hero {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search-hero-box {
+      flex: 1;
+      height: 72px;
+      border-radius: 18px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      border: 1px solid #eceff3;
+    }
+
+    .search-hero-box input {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      outline: none;
+      color: #111827;
+      font-size: 22px;
+    }
+
+    .search-hero-box input::placeholder {
+      color: #6b7280;
+    }
+
+    .search-hero-btn {
+      width: 72px;
+      height: 72px;
+      border: 0;
+      border-radius: 18px;
+      background: #0b1020;
+      color: #fff;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      min-height: 218px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 16px;
+      background:
+        radial-gradient(circle at top right, rgba(20, 184, 166, 0.18), transparent 30%),
+        radial-gradient(circle at left bottom, rgba(255, 255, 255, 0.14), transparent 28%),
+        linear-gradient(135deg, #0f6cbd, #1484d6 55%, #19a7ce);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-left {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -50px -60px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      filter: blur(0.5px);
+    }
+
+    .hero h2 {
+      margin: 4px 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0 0 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 640px;
+    }
+
+    .hero-right {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-tile {
+      padding: 12px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-tile strong {
+      display: block;
+      font-size: 22px;
+      margin-top: 4px;
+    }
+
+    .hero-update {
+      width: min(520px, 100%);
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-update h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .hero-update p {
+      margin: 0 0 8px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .hero-update .ghost-btn {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .quick-wrap,
+    .news-grid,
+    .recent-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .quick-wrap {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .quick-card {
+      padding: 18px;
+      min-height: 126px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-3px);
+      border-color: #cfe0ff;
+    }
+
+    .quick-card::after {
+      content: "";
+      position: absolute;
+      top: -24px;
+      right: -18px;
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, rgba(22, 119, 255, 0.08), rgba(20, 184, 166, 0.12));
+      border-radius: 50%;
+    }
+
+    .quick-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .quick-card h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .quick-card p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .news-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .news-panel {
+      padding: 18px;
+    }
+
+    .panel-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-item {
+      padding: 14px;
+      border-radius: 14px;
+      background: #fbfcfe;
+      border: 1px solid #edf2f7;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .list-item:hover {
+      border-color: #cfe0ff;
+      background: #f8fbff;
+    }
+
+    .item-title {
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .meta,
+    .recent-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--tag);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .recent-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      min-height: 150px;
+    }
+
+    .recent-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .recent-card .primary-btn {
+      width: fit-content;
+      background: #eaf3ff;
+      color: var(--primary);
+      padding: 10px 16px;
+    }
+
+    .topic-section {
+      display: grid;
+      gap: 16px;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .topic-card {
+      padding: 26px;
+      min-height: 250px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      border-color: #cfe0ff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+    }
+
+    .topic-head {
+      display: block;
+    }
+
+    .topic-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .topic-desc {
+      margin: 0;
+      color: #667085;
+      font-size: 15px;
+      line-height: 1.9;
+      min-height: 88px;
+    }
+
+    .topic-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      color: #667085;
+      font-size: 13px;
+      padding-top: 14px;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      min-width: 280px;
+      max-width: 420px;
+      background: rgba(15, 23, 42, 0.94);
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: 0.22s ease;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1600px) {
+      .quick-wrap {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .topic-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">⚖</div>
+        <div>
+          <h1>法律法规库</h1>
+          <p>N+1管理平台 / 地下矿山专题</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="ghost-btn" data-action="notice">消息</button>
+        <div class="avatar">L</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="main">
+        <section class="intro-search">
+          <div>
+            <h2 class="intro-title">法律法规库</h2>
+            <p class="intro-desc">全面的法律法规查询平台，助您快速找到所需的法律文件</p>
+          </div>
+          <div class="search-hero">
+            <label class="search-hero-box">
+              <input id="searchInput" type="text" placeholder="搜索法律法规、条例、规章...">
+            </label>
+            <button class="search-hero-btn" id="searchBtn" type="button">⌕</button>
+          </div>
+        </section>
+
+        <section class="hero card">
+          <div class="hero-left">
+            <div>
+              <h2>法律法规列表</h2>
+            </div>
+            <div class="hero-update">
+              <h4>政策更新提醒</h4>
+              <p>本周新增 12 条，涉及地下矿山安全、隐患治理与公开通报。</p>
+              <button class="ghost-btn" data-action="view-update">查看更新</button>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="stat-tile">
+              <span>文件总量</span>
+              <strong>1,286</strong>
+            </div>
+            <div class="stat-tile">
+              <span>最新发布</span>
+              <strong>28</strong>
+            </div>
+            <div class="stat-tile">
+              <span>隐患库</span>
+              <strong>96</strong>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <h3>快捷入口</h3>
+          </div>
+          <div class="quick-wrap">
+            <article class="quick-card card" data-href="legal-regulations-pc-list.html">
+              <div class="quick-icon" style="background:linear-gradient(135deg,#1677ff,#5aa0ff)">📘</div>
+              <h4>法律法规</h4>
+              <p>查看国家及地方适用法规，快速进入条文与详情。</p>
+            </article>
+            <article class="quick-card card" data-href="legal-regulations-pc-hazard-library.html">
+              <div class="quick-icon" style="background:linear-gradient(135deg,#f97316,#fb923c)">⚠</div>
+              <h4>隐患库</h4>
+              <p>查看矿山隐患判定标准与治理依据。</p>
+            </article>
+            <article class="quick-card card" data-href="legal-regulations-pc-national-policy.html">
+              <div class="quick-icon" style="background:linear-gradient(135deg,#0f766e,#14b8a6)">📄</div>
+              <h4>国家政策</h4>
+              <p>汇总国家矿山监管要求与指导意见。</p>
+            </article>
+            <article class="quick-card card" data-href="legal-regulations-pc-latest-release.html">
+              <div class="quick-icon" style="background:linear-gradient(135deg,#e11d48,#fb7185)">🕘</div>
+              <h4>最新发布</h4>
+              <p>聚合近期公开发布的法规和通知内容。</p>
+            </article>
+            <article class="quick-card card" data-href="legal-regulations-pc-government-info.html">
+              <div class="quick-icon" style="background:linear-gradient(135deg,#1d4ed8,#2563eb)">🏛</div>
+              <h4>政府信息公开</h4>
+              <p>查看政府权威公开信息、公告和办事指南。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section">
+          <div class="section-head">
+            <h3>分类内容</h3>
+          </div>
+          <div class="topic-grid">
+            <article class="topic-card card" data-href="legal-regulations-pc-list.html">
+              <div class="topic-head">
+                <h4 class="topic-title">法律法规</h4>
+              </div>
+              <p class="topic-desc">汇集地下矿山相关法律、行政法规、部门规章及配套制度内容，支持按名称、机构和发布时间快速进入详情。</p>
+              <div class="topic-meta">
+                <span>发布机构：国家标准</span>
+                <span>日期：2026-03-24</span>
+                <span>浏览量：1,862</span>
+              </div>
+            </article>
+
+            <article class="topic-card card" data-href="legal-regulations-pc-hazard-library.html">
+              <div class="topic-head">
+                <h4 class="topic-title">隐患库</h4>
+              </div>
+              <p class="topic-desc">集中展示地下矿山重大风险、较大风险和一般风险隐患内容，便于按类别查找隐患描述、管理措施和对应条款。</p>
+              <div class="topic-meta">
+                <span>类别：施工安全</span>
+                <span>日期：2024-03-15</span>
+                <span>关联条款：3 条</span>
+              </div>
+            </article>
+
+            <article class="topic-card card" data-href="legal-regulations-pc-national-policy.html">
+              <div class="topic-head">
+                <h4 class="topic-title">国家政策</h4>
+              </div>
+              <p class="topic-desc">收录国家层面的指导意见、专项整治通知和监管要求，适合查看矿山安全生产工作的重点政策方向。</p>
+              <div class="topic-meta">
+                <span>发布机构：国家矿山安全监察局</span>
+                <span>日期：2026-03-22</span>
+                <span>浏览量：1,536</span>
+              </div>
+            </article>
+
+            <article class="topic-card card" data-href="legal-regulations-pc-latest-release.html">
+              <div class="topic-head">
+                <h4 class="topic-title">最新发布</h4>
+              </div>
+              <p class="topic-desc">按照发布时间由近到远展示近期新增法规、公开文件和通知内容，方便快速追踪阶段性更新动态。</p>
+              <div class="topic-meta">
+                <span>发布机构：国务院安委会办公室</span>
+                <span>日期：2026-03-22</span>
+                <span>浏览量：1,204</span>
+              </div>
+            </article>
+
+            <article class="topic-card card" data-href="legal-regulations-pc-government-info.html">
+              <div class="topic-head">
+                <h4 class="topic-title">政府信息公开</h4>
+              </div>
+              <p class="topic-desc">自动汇集政府网站公开数据、办事指南和统计信息，按部门和发布时间集中展示，便于统一查看最新资讯。</p>
+              <div class="topic-meta">
+                <span>发布机构：应急管理部</span>
+                <span>日期：2024-03-25</span>
+                <span>数据类型：统计信息</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <h3>最近在看</h3>
+            <button class="ghost-btn" data-action="recent-more">查看全部</button>
+          </div>
+          <div class="recent-list">
+            <div class="recent-card card">
+              <div class="tag">法律法规</div>
+              <div class="item-title">金属非金属地下矿山安全规程</div>
+              <div class="recent-meta"><span>今天 10:26</span><span>国家标准</span></div>
+              <button class="primary-btn" onclick="window.location.href='legal-regulations-pc-list.html'">查看</button>
+            </div>
+            <div class="recent-card card">
+              <div class="tag">隐患库</div>
+              <div class="item-title">地下矿山重大事故隐患判定标准</div>
+              <div class="recent-meta"><span>今天 09:12</span><span>应急管理部</span></div>
+              <button class="primary-btn" onclick="window.location.href='legal-regulations-pc-hazard-library.html'">查看</button>
+            </div>
+            <div class="recent-card card">
+              <div class="tag">国家政策</div>
+              <div class="item-title">关于进一步加强矿山安全生产工作的指导意见</div>
+              <div class="recent-meta"><span>昨天 16:45</span><span>国家矿山安全监察局</span></div>
+              <button class="primary-btn" onclick="window.location.href='legal-regulations-pc-latest-release.html'">查看</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    const searchInput = document.getElementById("searchInput");
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    document.querySelectorAll("[data-href]").forEach((item) => {
+      item.addEventListener("click", () => {
+        window.location.href = item.dataset.href;
+      });
+    });
+
+    document.querySelectorAll("[data-action]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const actionMap = {
+          "notice": "演示交互：查看消息中心",
+          "latest-release-more": "正在跳转到最新发布页",
+          "recent-more": "演示交互：查看全部最近浏览",
+          "view-update": "演示交互：查看本周政策更新"
+        };
+        showToast(actionMap[btn.dataset.action] || "演示交互");
+      });
+    });
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      window.location.href = "legal-regulations-pc-list.html";
+    });
+
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        window.location.href = "legal-regulations-pc-list.html";
+      }
+    });
+  </script>
+</body>
+</html>
