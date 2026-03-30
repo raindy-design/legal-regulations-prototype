@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法律法规库 - 文件详情</title>
+  <style>
+    :root {
+      --bg:#f5f7fa; --card:#fff; --line:#e7edf5; --text:#1f2a37; --muted:#667085;
+      --primary:#1677ff; --primary-weak:#eaf3ff; --shadow:0 10px 30px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:28px 24px 40px;display:grid;gap:18px}
+    .back{display:inline-flex;align-items:center;gap:8px;width:fit-content;text-decoration:none;color:#344054;font-weight:600}
+    .hero,.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+    .hero{padding:26px;display:flex;justify-content:space-between;gap:18px}
+    .hero h1{margin:10px 0 14px;font-size:40px;line-height:1.2}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}
+    .badge{height:34px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center;font-size:14px;font-weight:700}
+    .badge.primary{background:var(--primary-weak);color:var(--primary)}
+    .badge.gray{background:#f2f4f7;color:#344054}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn,.btn-line{height:42px;padding:0 16px;border-radius:12px;border:0;cursor:pointer;font-size:14px}
+    .btn{background:var(--primary);color:#fff}.btn-line{background:var(--primary-weak);color:var(--primary)}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+    .main,.side{display:grid;gap:18px}
+    .card{padding:24px}
+    .section-title{margin:0 0 16px;font-size:28px}
+    .desc{color:#475467;font-size:17px;line-height:2}
+    .meta-list{display:grid;gap:12px}
+    .meta-item{padding:14px;border-radius:14px;border:1px solid #edf2f7;background:#fbfcfe;line-height:1.7;font-size:14px;color:#475467}
+    .law-list{margin:0;padding-left:22px;color:#475467;font-size:17px;line-height:2}
+    .preview-shell{border:1px solid #dbe4f0;border-radius:18px;overflow:hidden;background:#f8fafc}
+    .preview-top{height:46px;display:flex;align-items:center;gap:8px;padding:0 16px;background:#eef4fb;border-bottom:1px solid #dbe4f0}
+    .preview-dot{width:10px;height:10px;border-radius:50%}
+    .preview-page{padding:28px;background:#fff;min-height:520px}
+    .preview-title{font-size:28px;font-weight:700;line-height:1.5;margin-bottom:18px;color:#1f2a37}
+    .preview-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:20px;color:#475467;font-size:14px}
+    .preview-block{margin-bottom:20px}
+    .preview-block h4{margin:0 0 10px;font-size:18px}
+    .preview-block p{margin:0;color:#475467;font-size:15px;line-height:1.9}
+    .preview-list{margin:0;padding-left:20px;color:#475467;font-size:15px;line-height:1.9}
+    .toast{position:fixed;right:24px;bottom:24px;background:rgba(15,23,42,.94);color:#fff;padding:14px 16px;border-radius:14px;box-shadow:0 16px 34px rgba(15,23,42,.25);opacity:0;transform:translateY(8px);pointer-events:none;transition:.22s ease;min-width:280px}
+    .toast.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="legal-regulations-pc-list.html">← 返回列表</a>
+    <section class="hero">
+      <div>
+        <div style="font-size:13px;color:#667085;">法律法规 / 详情页 / 金属非金属地下矿山安全规程</div>
+        <h1>金属非金属地下矿山安全规程</h1>
+        <div class="badges">
+          <span class="badge primary">法律法规</span>
+          <span class="badge gray">国家级</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-line" id="downloadBtn">下载文件</button>
+      </div>
+    </section>
+    <div class="grid">
+      <main class="main">
+        <section class="card">
+          <h2 class="section-title">文件摘要</h2>
+          <div class="desc">本规程规范地下矿山生产组织、通风、运输、提升、爆破、机电管理等核心安全要求，适用于地下矿山企业安全生产管理和日常合规执行。</div>
+        </section>
+        <section class="card">
+          <h2 class="section-title">正文要点</h2>
+          <div class="desc">1. 明确地下矿山生产系统和岗位安全职责。<br>2. 对通风、防火、防治水、机电运输等关键环节提出管理要求。<br>3. 建立隐患排查治理和风险分级管控机制。<br>4. 明确应急管理和教育培训要求。</div>
+        </section>
+        <section class="card">
+          <h2 class="section-title">文件预览</h2>
+          <div class="preview-shell">
+            <div class="preview-top">
+              <span class="preview-dot" style="background:#fb7185;"></span>
+              <span class="preview-dot" style="background:#fbbf24;"></span>
+              <span class="preview-dot" style="background:#34d399;"></span>
+              <span style="margin-left:8px;color:#667085;font-size:13px;">地下矿山安全规程.pdf</span>
+            </div>
+            <div class="preview-page">
+              <div class="preview-title">金属非金属地下矿山安全规程</div>
+              <div class="preview-meta">
+                <div>发布机构：国家标准</div>
+                <div>发布日期：2026-03-24</div>
+                <div>文件类型：法律法规</div>
+                <div>适用对象：地下矿山企业</div>
+              </div>
+              <div class="preview-block">
+                <h4>第一章 总则</h4>
+                <p>为加强金属非金属地下矿山安全生产管理，预防和减少生产安全事故，保障从业人员生命安全，依据有关法律法规制定本规程。</p>
+              </div>
+              <div class="preview-block">
+                <h4>第二章 基本要求</h4>
+                <p>矿山企业应建立健全安全生产责任制，完善风险分级管控和隐患排查治理双重预防机制，确保通风、提升、运输、供电和排水系统安全稳定运行。</p>
+              </div>
+              <div class="preview-block">
+                <h4>第三章 重点条款</h4>
+                <ol class="preview-list">
+                  <li>高风险作业须执行审批、交底和监护制度。</li>
+                  <li>井下通风、防治水、机电运输等系统需定期检查并记录。</li>
+                  <li>重大事故隐患应立即整改，闭环销号后方可恢复相关作业。</li>
+                  <li>企业应按规定组织培训、演练和应急处置评估。</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <h2 class="section-title">相关法律法规</h2>
+          <ul class="law-list">
+            <li>中华人民共和国安全生产法</li>
+            <li>矿山安全法</li>
+            <li>生产安全事故应急条例</li>
+          </ul>
+        </section>
+      </main>
+      <aside class="side">
+        <section class="card">
+          <h2 style="margin:0 0 16px;font-size:22px;">文件信息</h2>
+          <div class="meta-list">
+            <div class="meta-item">发布机构：国家标准</div>
+            <div class="meta-item">发布日期：2026-03-24</div>
+            <div class="meta-item">浏览量：1862</div>
+          </div>
+        </section>
+        <section class="card">
+          <h2 style="margin:0 0 16px;font-size:22px;">附件列表</h2>
+          <div class="meta-list">
+            <div class="meta-item">地下矿山安全规程.pdf</div>
+            <div class="meta-item">配套检查表.docx</div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const toast = document.getElementById("toast");
+    function showToast(text){toast.textContent=text;toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),2200);}
+    document.getElementById("downloadBtn").addEventListener("click",()=>{const blob=new Blob(["文件详情：金属非金属地下矿山安全规程"],{type:"text/plain;charset=utf-8"});const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="金属非金属地下矿山安全规程-详情.txt";link.click();URL.revokeObjectURL(link.href);});
+  </script>
+</body>
+</html>
