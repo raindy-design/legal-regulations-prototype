@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法律法规库 - 最新发布</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --line: #e7edf5;
+      --text: #1f2a37;
+      --muted: #667085;
+      --primary: #1677ff;
+      --primary-weak: #eaf3ff;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .topbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(255,255,255,.95);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #1677ff, #14b8a6);
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn,
+    .btn-line,
+    .action-btn {
+      border: 0;
+      cursor: pointer;
+      transition: .2s ease;
+      font-size: 14px;
+    }
+
+    .btn {
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-line {
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 12px;
+      background: var(--primary-weak);
+      color: var(--primary);
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #dbeafe;
+      color: #0f5ed7;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .sidebar {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      height: calc(100vh - 120px);
+      position: sticky;
+      top: 96px;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-item {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      border-radius: 14px;
+      color: #344054;
+      text-decoration: none;
+    }
+
+    .menu-item.active {
+      background: var(--primary-weak);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .hero {
+      padding: 24px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(22,119,255,.1), transparent 25%),
+        linear-gradient(135deg, #ffffff, #f8fbff);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h2 {
+      margin: 12px 0 8px;
+      font-size: 34px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .search-panel {
+      padding: 18px 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .search-row input {
+      flex: 1;
+      height: 46px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 0 16px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .timeline-group {
+      display: grid;
+      gap: 16px;
+    }
+
+    .group-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .count-badge {
+      min-width: 44px;
+      height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef2f7;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      bottom: 2px;
+      width: 2px;
+      background: #dbe5f0;
+    }
+
+    .release-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .release-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      min-height: 310px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+
+    .type-badge {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      background: #f2f4f7;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .summary {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+      min-height: 96px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e4e7ec;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 10px;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .action-btn.primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.42);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
+    .modal-backdrop.show{display:flex}
+    .modal{width:min(560px,100%);background:#fff;border-radius:22px;box-shadow:0 20px 60px rgba(15,23,42,.2);padding:24px}
+    .modal h3{margin:0 0 10px;font-size:24px}.modal p{margin:0;color:var(--muted);line-height:1.8}.modal-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🔔</div>
+      <div>
+        <h1>法律法规库</h1>
+        <p>N+1管理平台 / 最新发布</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn-line" onclick="location.href='legal-regulations-pc-home.html'">返回首页</button>
+      <button class="btn-line" data-modal-title="高级筛选" data-modal-text="可以按月份、文件类型、发布机构和关键词筛选最新发布内容。">高级筛选</button>
+      <button class="btn" data-modal-title="导出发布清单" data-modal-text="当前最新发布清单已生成，可导出为 Excel 或 PDF。">导出发布清单</button>
+      <div class="avatar">L</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="menu">
+        <a class="menu-item" href="legal-regulations-pc-home.html">🏠 首页</a>
+        <a class="menu-item" href="legal-regulations-pc-list.html">📘 法律法规</a>
+        <a class="menu-item" href="legal-regulations-pc-national-policy.html">📄 国家政策</a>
+        <a class="menu-item" href="legal-regulations-pc-hazard-library.html">⚠ 隐患库</a>
+        <a class="menu-item" href="legal-regulations-pc-government-info.html">🏛 政府信息公开</a>
+        <a class="menu-item active" href="legal-regulations-pc-latest-release.html">🕘 最新发布</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div style="font-size:13px;color:#667085;">首页 / 最新发布 / 时间顺序浏览</div>
+        <h2>最新发布</h2>
+        <p>按时间顺序查看所有最新发布的法律法规、国家政策和公开文件，帮助地下矿山用户及时掌握新增内容与更新动态。</p>
+      </section>
+
+      <section class="search-panel">
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="搜索最新发布，例如：专项整治、城市安全、危险化学品">
+          <button class="btn" id="searchBtn">搜索</button>
+        </div>
+      </section>
+
+      <section class="timeline-group">
+        <div class="group-head">
+          <span>📅 2024年3月</span>
+          <span class="count-badge">3 条</span>
+        </div>
+        <div class="timeline">
+          <div class="release-grid">
+            <article class="release-card">
+              <div class="card-top">
+                <h3 class="card-title">关于推进安全生产领域改革发展的意见</h3>
+                <span class="type-badge">国家政策</span>
+              </div>
+              <div class="summary">为贯彻落实党的二十大精神，推进安全生产领域改革发展，围绕责任落实、风险防控、监管机制和应急管理提出意见。</div>
+              <div class="tags">
+                <span class="tag">安全生产</span>
+                <span class="tag">改革发展</span>
+              </div>
+              <div class="meta">
+                <span>发布机构：中共中央 国务院</span>
+                <span>发布日期：2024-03-20</span>
+                <span>浏览量：18500</span>
+              </div>
+              <div class="card-actions">
+                <button class="action-btn download-btn">下载文件</button>
+                <button class="action-btn" data-modal-title="加入订阅" data-modal-text="已订阅与安全生产和改革发展相关的最新发布。">加入订阅</button>
+                <button class="action-btn primary" onclick="window.location.href='legal-regulations-pc-document-detail.html'">查看详情</button>
+              </div>
+            </article>
+
+            <article class="release-card">
+              <div class="card-top">
+                <h3 class="card-title">全国安全生产专项整治三年行动计划</h3>
+                <span class="type-badge">国家政策</span>
+              </div>
+              <div class="summary">从根本上消除事故隐患，围绕专项整治、三年行动、重点行业和长效机制建设提出系统性部署。</div>
+              <div class="tags">
+                <span class="tag">专项整治</span>
+                <span class="tag">三年行动</span>
+              </div>
+              <div class="meta">
+                <span>发布机构：国务院安委会</span>
+                <span>发布日期：2024-03-18</span>
+                <span>浏览量：16200</span>
+              </div>
+              <div class="card-actions">
+                <button class="action-btn download-btn">下载文件</button>
+                <button class="action-btn primary" onclick="window.location.href='legal-regulations-pc-document-detail.html'">查看详情</button>
+              </div>
+            </article>
+
+            <article class="release-card">
+              <div class="card-top">
+                <h3 class="card-title">关于加强城市安全风险管控工作的指导意见</h3>
+                <span class="type-badge">国家政策</span>
+              </div>
+              <div class="summary">为加强城市安全风险管控，提升城市安全保障能力，明确风险识别、分级管控、源头治理和责任落实要求。</div>
+              <div class="tags">
+                <span class="tag">城市安全</span>
+                <span class="tag">风险管控</span>
+              </div>
+              <div class="meta">
+                <span>发布机构：应急管理部</span>
+                <span>发布日期：2024-03-15</span>
+                <span>浏览量：14800</span>
+              </div>
+              <div class="card-actions">
+                <button class="action-btn download-btn">下载文件</button>
+                <button class="action-btn primary" onclick="window.location.href='legal-regulations-pc-document-detail.html'">查看详情</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="timeline-group">
+        <div class="group-head">
+          <span>📅 2023年3月</span>
+          <span class="count-badge">1 条</span>
+        </div>
+        <div class="timeline">
+          <div class="release-grid" style="grid-template-columns:repeat(1, minmax(0, 1fr));max-width:580px;">
+            <article class="release-card">
+              <div class="card-top">
+                <h3 class="card-title">危险化学品安全管理条例</h3>
+                <span class="type-badge">行政法规</span>
+              </div>
+              <div class="summary">围绕危险化学品生产、储存、经营、运输、使用和处置等环节明确安全管理责任与监管要求。</div>
+              <div class="tags">
+                <span class="tag">危险化学品</span>
+                <span class="tag">安全管理</span>
+              </div>
+              <div class="meta">
+                <span>发布机构：国务院</span>
+                <span>发布日期：2023-03-12</span>
+                <span>浏览量：13600</span>
+              </div>
+              <div class="card-actions">
+                <button class="action-btn download-btn">下载文件</button>
+                <button class="action-btn" data-modal-title="对比文件" data-modal-text="该文件已加入法规对比清单。">加入对比</button>
+                <button class="action-btn primary" onclick="window.location.href='legal-regulations-pc-document-detail.html'">查看详情</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><h3 id="modalTitle"></h3><p id="modalText"></p><div class="modal-actions"><button class="btn-line" onclick="closeModal()">关闭</button><button class="btn" onclick="closeModal()">确认</button></div></div></div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const backdrop=document.getElementById('modalBackdrop'), titleEl=document.getElementById('modalTitle'), textEl=document.getElementById('modalText');
+    function openModal(title,text){titleEl.textContent=title;textEl.textContent=text;backdrop.classList.add('show');}
+    function closeModal(){backdrop.classList.remove('show');}
+    backdrop.addEventListener('click',e=>{if(e.target===backdrop) closeModal();});
+    document.querySelectorAll('[data-modal-title]').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.modalTitle,el.dataset.modalText)));
+    document.getElementById("searchBtn").addEventListener("click", () => openModal("搜索结果","已根据关键词“" + (searchInput.value.trim() || "专项整治") + "”刷新最新发布列表。"));
+    searchInput.addEventListener("keydown", (e) => { if (e.key === "Enter") openModal("搜索结果","已根据关键词“" + (searchInput.value.trim() || "专项整治") + "”刷新最新发布列表。"); });
+    document.querySelectorAll(".download-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const title = btn.closest(".release-card").querySelector(".card-title").textContent.trim();
+        const blob = new Blob(["发布文件：" + title + "\n状态：示例下载文件\n来源：最新发布"], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = title + ".txt";
+        link.click();
+        URL.revokeObjectURL(link.href);
+        openModal("开始下载","《" + title + "》已开始下载。");
+      });
+    });
+  </script>
+</body>
+</html>
