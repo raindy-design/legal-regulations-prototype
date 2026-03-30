@@ -1,0 +1,19 @@
+{
+  "name": "legal-regulations-prototype",
+  "public": true,
+  "buildCommand": "",
+  "framework": null,
+  "installCommand": null,
+  "outputDirectory": null,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/app/:path*",
+      "destination": "/app/:path*"
+    },
+    {
+      "source": "/:path*.html",
+      "destination": "/:path*.html"
+    }
+  ]
+}
