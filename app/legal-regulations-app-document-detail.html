@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>法律法规库 - App文件详情</title>
+  <style>
+    :root{
+      --bg:#edf3fb;--card:#fff;--line:#e4ecf5;--text:#101828;--muted:#667085;
+      --primary:#1677ff;--primary-weak:#eaf3ff;--shadow:0 14px 32px rgba(15,23,42,.08);--safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
+    .phone{max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(28px + var(--safe-bottom))}
+    .topbar{display:flex;align-items:center;gap:10px;padding:4px 2px 14px}
+    .back{width:40px;height:40px;border-radius:14px;border:0;background:#fff;box-shadow:var(--shadow);font-size:18px;flex-shrink:0}
+    .title{flex:1;min-width:0}.title h1{margin:0;font-size:21px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+    /* Hero */
+    .hero h2{margin:0 0 10px;font-size:22px;font-weight:700;line-height:1.35}
+    .meta-inline{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:14px}
+    .meta-inline span{font-size:13px;color:var(--muted)}
+    .hero-actions{display:flex;gap:10px}
+    .btn{height:42px;padding:0 16px;border-radius:14px;border:0;cursor:pointer;font-size:14px;background:var(--primary);color:#fff}
+    /* 文件速览 */
+    .section-title{margin:0 0 12px;font-size:17px;font-weight:700;color:var(--text)}
+    .desc{margin:0;color:#475467;font-size:14px;line-height:1.9}
+    /* 文件预览 */
+    .preview{border:1px solid #dbe4f0;border-radius:18px;overflow:hidden;background:#f8fafc}
+    .preview-top{height:42px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#eef4fb;border-bottom:1px solid #dbe4f0}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .preview-page{padding:20px;background:#fff}
+    .preview-page h4{margin:0 0 12px;font-size:20px}
+    .preview-page p,.preview-page li{color:#475467;font-size:14px;line-height:1.8}
+    .preview-page ol{margin:0;padding-left:20px}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:rgba(15,23,42,.92);color:#fff;padding:12px 16px;border-radius:14px;font-size:13px;opacity:0;pointer-events:none;transition:.22s ease;z-index:80;white-space:nowrap}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back" onclick="location.href='legal-regulations-app-list.html'">←</button>
+      <div class="title">
+        <h1>文件详情</h1>
+      </div>
+    </header>
+
+    <!-- 标题 + 文件信息 + 操作 -->
+    <section class="card hero">
+      <h2>金属非金属地下矿山安全规程</h2>
+      <div class="meta-inline">
+        <span>发布机构：国家标准</span>
+        <span>发布日期：2026-03-24</span>
+        <span>浏览量：1,862</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn" id="downloadBtn">下载文件</button>
+      </div>
+    </section>
+
+    <!-- 文件速览（原正文要点） -->
+    <section class="card">
+      <h3 class="section-title">文件速览</h3>
+      <p class="desc">
+        1. 明确地下矿山生产系统和岗位安全职责。<br>
+        2. 对通风、防火、防治水、机电运输等关键环节提出管理要求。<br>
+        3. 建立隐患排查治理和风险分级管控机制。<br>
+        4. 明确应急管理和教育培训要求。
+      </p>
+    </section>
+
+    <!-- 文件预览 -->
+    <section class="card">
+      <h3 class="section-title">文件预览</h3>
+      <div class="preview">
+        <div class="preview-top">
+          <span class="dot" style="background:#fb7185;"></span>
+          <span class="dot" style="background:#fbbf24;"></span>
+          <span class="dot" style="background:#34d399;"></span>
+          <span style="margin-left:8px;color:#667085;font-size:12px;">地下矿山安全规程.pdf</span>
+        </div>
+        <div class="preview-page">
+          <h4>金属非金属地下矿山安全规程</h4>
+          <p>为加强金属非金属地下矿山安全生产管理，预防和减少生产安全事故，保障从业人员生命安全，依据有关法律法规制定本规程。</p>
+          <ol>
+            <li>高风险作业须执行审批、交底和监护制度。</li>
+            <li>井下通风、防治水、机电运输等系统需定期检查并记录。</li>
+            <li>重大事故隐患应立即整改，闭环销号后方可恢复相关作业。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(showToast._t);showToast._t=setTimeout(()=>toast.classList.remove("show"),2200);}
+    document.getElementById("downloadBtn").addEventListener("click",()=>showToast("开始下载文件"));
+  </script>
+</body>
+</html>
