@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法律法规库 - 隐患详情</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --line: #e7edf5;
+      --text: #1f2a37;
+      --muted: #667085;
+      --primary: #1677ff;
+      --primary-weak: #eaf3ff;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --red: #d92d20;
+      --red-bg: #fef3f2;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 24px 40px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      text-decoration: none;
+      color: #344054;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .hero h1 {
+      margin: 10px 0 14px;
+      font-size: 42px;
+      line-height: 1.2;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .badge.level {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .badge.tag {
+      background: #f2f4f7;
+      color: #344054;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    .btn-line {
+      height: 42px;
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-line {
+      background: var(--primary-weak);
+      color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 28px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-item {
+      padding: 18px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+    }
+
+    .info-item small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .info-item strong {
+      font-size: 18px;
+    }
+
+    .desc {
+      color: #475467;
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .law-list {
+      margin: 0;
+      padding-left: 22px;
+      color: #475467;
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: rgba(15,23,42,.94);
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 14px;
+      box-shadow: 0 16px 34px rgba(15,23,42,.25);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: .22s ease;
+      min-width: 280px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="legal-regulations-pc-hazard-library.html">← 返回隐患库</a>
+
+    <section class="hero">
+      <div>
+        <div style="font-size:13px;color:#667085;">隐患库 / 详情页 / 高空作业未系安全带</div>
+        <h1>高空作业未系安全带</h1>
+        <div class="badges">
+          <span class="badge level">重大风险</span>
+          <span class="badge tag">施工安全</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-line" id="downloadBtn">下载隐患文件</button>
+        <button class="btn" data-action="export">导出详情</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <main class="main">
+        <section class="card">
+          <h2 class="section-title">基本信息</h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <small>隐患类别</small>
+              <strong>施工安全</strong>
+            </div>
+            <div class="info-item">
+              <small>录入日期</small>
+              <strong>2024-03-15</strong>
+            </div>
+            <div class="info-item">
+              <small>风险等级</small>
+              <strong style="color:var(--red);">重大风险</strong>
+            </div>
+            <div class="info-item">
+              <small>适用场景</small>
+              <strong>高处作业、检修作业、临边作业</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">隐患描述</h2>
+          <div class="desc">在高度超过 2 米的地方作业时，工作人员未按规定佩戴和正确使用安全带，存在坠落风险。该类场景在井口平台、设备检修、临边搭设和高处维护作业中较为常见，一旦失足或支撑失稳，容易造成群死群伤事故。</div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">管理措施</h2>
+          <div class="desc">1. 所有高空作业人员必须佩戴合格的安全带。<br>2. 安全带应高挂低用，严禁系挂在不牢靠部位。<br>3. 设置安全监护员现场监督。<br>4. 作业前检查作业面、临边防护和系挂点状态。<br>5. 组织专项培训和班前风险交底。<br>6. 建立高处作业审批和现场验收制度，形成作业前、中、后闭环管理。</div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">相关条款</h2>
+          <ul class="law-list">
+            <li>《中华人民共和国安全生产法》第五十七条：从业人员在作业过程中应当严格落实安全操作规程，正确佩戴和使用劳动防护用品。</li>
+            <li>《金属非金属地下矿山安全规程》高处作业相关条款：高处作业必须设置可靠防护，并按规定系挂安全带。</li>
+            <li>《高处作业分级标准》有关规定：凡在坠落高度基准面 2 米及以上有可能坠落的高处进行作业，均应落实相应防护措施。</li>
+            <li>《生产经营单位安全培训规定》第二十条：高风险作业岗位从业人员应接受专项安全培训和作业风险告知。</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      const blob = new Blob(["隐患详情：高空作业未系安全带\n风险等级：重大风险"], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "高空作业未系安全带-隐患详情.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    document.querySelectorAll("[data-action]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const actionMap = {
+          "export": "演示交互：导出当前隐患详情"
+        };
+        showToast(actionMap[btn.dataset.action] || "演示交互");
+      });
+    });
+  </script>
+</body>
+</html>
