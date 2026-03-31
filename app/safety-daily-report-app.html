@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>安全日报 - App端</title>
+  <style>
+    :root{
+      --bg:#edf3fb;
+      --card:#ffffff;
+      --line:#e4ecf5;
+      --text:#101828;
+      --muted:#667085;
+      --primary:#1677ff;
+      --primary-weak:#eaf3ff;
+      --navy:#0f172a;
+      --shadow:0 14px 32px rgba(15,23,42,.08);
+      --green:#12b76a;
+      --red:#f04438;
+      --orange:#f79009;
+      --safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);}
+    .phone{width:100%;max-width:430px;margin:0 auto;min-height:100vh;padding:12px 14px calc(92px + var(--safe-bottom));}
+
+    /* Topbar */
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 2px 14px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .brand-mark{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#1677ff,#14b8a6);color:#fff;font-size:18px;box-shadow:var(--shadow);flex-shrink:0;}
+    .brand h1{margin:0;font-size:19px;line-height:1.2;font-weight:700;}
+    .topbar-right{display:flex;align-items:center;gap:8px;}
+    .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:17px;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.05);}
+    .date-pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--muted);box-shadow:0 2px 8px rgba(15,23,42,.05);}
+
+    /* Status card */
+    .status-card{
+      background:linear-gradient(135deg,#0f172a 0%,#0f3460 60%,#1677ff 100%);
+      border-radius:22px;padding:18px;color:#fff;position:relative;overflow:hidden;
+      box-shadow:0 18px 40px rgba(22,119,255,.22);margin-bottom:14px;
+    }
+    .status-card::before{content:"";position:absolute;right:-40px;top:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06);}
+    .status-card::after{content:"";position:absolute;right:30px;bottom:-30px;width:110px;height:110px;border-radius:50%;background:rgba(20,184,166,.12);}
+    .sc-label{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;position:relative;z-index:1;}
+    .sc-title{font-size:18px;font-weight:700;line-height:1.3;margin:0 0 8px;position:relative;z-index:1;}
+    .sc-meta{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:14px;position:relative;z-index:1;}
+    .sc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative;z-index:1;}
+    .sc-stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:10px 8px;text-align:center;}
+    .sc-stat-num{font-size:22px;font-weight:700;line-height:1;}
+    .sc-stat-label{font-size:10px;color:rgba(255,255,255,.65);margin-top:3px;}
+    .sc-stat.danger .sc-stat-num{color:#ff8a8a;}
+    .sc-stat.warn .sc-stat-num{color:#ffd06e;}
+    .sc-stat.ok .sc-stat-num{color:#6effc7;}
+    .status-badge{display:inline-block;background:rgba(18,183,106,.2);border:1px solid rgba(18,183,106,.4);color:#6effc7;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:600;margin-top:6px;}
+
+    /* Section */
+    .section{margin-top:18px;}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .section-title{font-size:15px;font-weight:700;margin:0;}
+    .more-btn{font-size:12px;color:var(--primary);background:none;border:none;padding:0;cursor:pointer;}
+
+    /* KPI strip */
+    .kpi-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+    .kpi-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+    .kpi-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:18px;flex-shrink:0;}
+    .kpi-info{}
+    .kpi-label{font-size:11px;color:var(--muted);}
+    .kpi-num{font-size:22px;font-weight:700;line-height:1.1;}
+    .kpi-trend{font-size:11px;margin-top:2px;}
+    .kpi-trend.up{color:var(--red);}
+    .kpi-trend.down{color:var(--green);}
+    .kpi-trend.flat{color:var(--muted);}
+
+    /* Hazard list */
+    .hazard-list{display:grid;gap:10px;}
+    .hazard-item{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;cursor:pointer;transition:.15s;}
+    .hazard-item:hover{transform:translateY(-1px);}
+    .hi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
+    .hi-title{font-size:14px;font-weight:600;line-height:1.4;flex:1;}
+    .hi-bottom{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .hi-meta{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:3px;}
+    .tag{display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:999px;font-size:11px;font-weight:600;}
+    .tag-red{background:#fff1f0;color:var(--red);}
+    .tag-orange{background:#fff7e6;color:var(--orange);}
+    .tag-green{background:#ecfdf3;color:var(--green);}
+    .tag-blue{background:#eef4ff;color:var(--primary);}
+    .tag-gray{background:#f2f4f7;color:var(--muted);}
+    .level-bar{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;}
+    .level-dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+
+    /* Timeline */
+    .timeline{display:grid;gap:0;}
+    .tl-item{display:grid;grid-template-columns:14px 1fr;gap:10px;padding:0 0 14px;position:relative;}
+    .tl-item:last-child{padding-bottom:0;}
+    .tl-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative;z-index:1;}
+    .tl-dot.red{background:var(--red);box-shadow:0 0 0 3px rgba(240,68,56,.15);}
+    .tl-dot.orange{background:var(--orange);box-shadow:0 0 0 3px rgba(247,144,9,.15);}
+    .tl-dot.green{background:var(--green);box-shadow:0 0 0 3px rgba(18,183,106,.15);}
+    .tl-dot.blue{background:var(--primary);box-shadow:0 0 0 3px rgba(22,119,255,.15);}
+    .tl-item::before{content:"";position:absolute;left:3px;top:13px;width:1px;bottom:0;background:var(--line);}
+    .tl-item:last-child::before{display:none;}
+    .tl-time{font-size:11px;color:var(--muted);margin-bottom:2px;}
+    .tl-text{font-size:13px;line-height:1.5;color:var(--text);}
+
+    /* Inspection card */
+    .inspect-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;}
+    .ic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+    .ic-item{background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+    .ic-label{font-size:11px;color:var(--muted);margin-bottom:3px;}
+    .ic-val{font-size:20px;font-weight:700;}
+    .ic-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+    .prog-list{display:grid;gap:8px;}
+    .prog-item{display:grid;gap:4px;}
+    .prog-top{display:flex;justify-content:space-between;font-size:12px;}
+    .prog-bar{height:6px;border-radius:999px;background:#f0f3f8;overflow:hidden;}
+    .prog-fill{height:100%;border-radius:999px;}
+
+    /* Compliance */
+    .comp-list{display:grid;gap:8px;}
+    .comp-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+    .comp-icon{font-size:18px;flex-shrink:0;}
+    .comp-name{flex:1;font-size:13px;}
+    .comp-bar-wrap{display:flex;align-items:center;gap:6px;}
+    .comp-bar{width:60px;height:4px;border-radius:999px;background:#e7edf5;overflow:hidden;}
+    .comp-fill{height:100%;border-radius:999px;}
+    .comp-rate{font-size:12px;font-weight:700;min-width:30px;text-align:right;}
+
+    /* Summary */
+    .summary-card{background:#f0f6ff;border:1px solid #d0e4ff;border-radius:18px;padding:16px;font-size:13px;line-height:1.7;color:#334155;}
+    .summary-heading{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--navy);display:flex;align-items:center;gap:6px;}
+
+    /* Tabbar */
+    .tabbar{
+      position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+      width:100%;max-width:430px;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(12px);
+      border-top:1px solid var(--line);
+      display:flex;padding:8px 0 calc(8px + var(--safe-bottom));
+      z-index:100;
+    }
+    .tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;}
+    .tab-icon{font-size:22px;line-height:1;}
+    .tab-label{font-size:10px;color:var(--muted);}
+    .tab-item.active .tab-label{color:var(--primary);}
+    .tab-item.active .tab-icon{filter:none;}
+
+    /* Action row */
+    .float-actions{display:flex;gap:10px;margin-top:20px;}
+    .fab{flex:1;padding:14px;border-radius:16px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:.15s;}
+    .fab-ghost{background:#fff;border:1px solid var(--line);color:var(--text);}
+    .fab-primary{background:var(--primary);color:#fff;box-shadow:0 8px 20px rgba(22,119,255,.3);}
+    .fab:hover{transform:translateY(-1px);}
+  </style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">🛡️</div>
+      <h1>安全日报</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="date-pill">03/31</div>
+      <div class="icon-btn">📥</div>
+      <div class="icon-btn">📤</div>
+    </div>
+  </div>
+
+  <!-- Status Card -->
+  <div class="status-card">
+    <div class="sc-label">2026年03月31日 · 今日安全状态</div>
+    <div class="sc-title">总体稳定，1项高危<br>隐患需立即处置</div>
+    <div class="sc-meta">📍 胜利矿区 · 三采区同步作业</div>
+    <div class="sc-stats">
+      <div class="sc-stat danger">
+        <div class="sc-stat-num">1</div>
+        <div class="sc-stat-label">高危隐患</div>
+      </div>
+      <div class="sc-stat warn">
+        <div class="sc-stat-num">4</div>
+        <div class="sc-stat-label">待整改</div>
+      </div>
+      <div class="sc-stat ok">
+        <div class="sc-stat-num">12</div>
+        <div class="sc-stat-label">已闭合</div>
+      </div>
+      <div class="sc-stat ok">
+        <div class="sc-stat-num">286</div>
+        <div class="sc-stat-label">无事故天</div>
+      </div>
+    </div>
+    <div class="status-badge">✓ 今日未发生事故</div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">关键指标</h3>
+    </div>
+    <div class="kpi-strip">
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:#fff0ef;">🔥</div>
+        <div class="kpi-info">
+          <div class="kpi-label">今日新增隐患</div>
+          <div class="kpi-num" style="color:var(--red);">3</div>
+          <div class="kpi-trend up">↑ 较昨日 +1</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:#ecfdf3;">✅</div>
+        <div class="kpi-info">
+          <div class="kpi-label">整改完成</div>
+          <div class="kpi-num" style="color:var(--green);">5</div>
+          <div class="kpi-trend flat">→ 与昨日持平</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:#eef4ff;">🔍</div>
+        <div class="kpi-info">
+          <div class="kpi-label">今日巡检</div>
+          <div class="kpi-num">18/19</div>
+          <div class="kpi-trend down">↑ 完成率 94%</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background:#fff7e6;">👷</div>
+        <div class="kpi-info">
+          <div class="kpi-label">今日在岗</div>
+          <div class="kpi-num">142</div>
+          <div class="kpi-trend flat">→ 正常出勤</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hazard List -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">今日隐患汇总</h3>
+      <button class="more-btn">全部 →</button>
+    </div>
+    <div class="hazard-list">
+      <div class="hazard-item">
+        <div class="hi-top">
+          <div class="hi-title">二采区皮带机防护罩脱落</div>
+          <span class="tag tag-red">高危</span>
+        </div>
+        <div class="hi-bottom">
+          <span class="hi-meta">📍 二采区 #3 皮带</span>
+          <span class="hi-meta">👤 责任人：张明</span>
+          <span class="tag tag-red">待处置</span>
+        </div>
+      </div>
+      <div class="hazard-item">
+        <div class="hi-top">
+          <div class="hi-title">配电室电缆绑扎松脱</div>
+          <span class="tag tag-orange">中等</span>
+        </div>
+        <div class="hi-bottom">
+          <span class="hi-meta">📍 主井配电室</span>
+          <span class="hi-meta">👤 王磊</span>
+          <span class="tag tag-orange">整改中</span>
+        </div>
+      </div>
+      <div class="hazard-item">
+        <div class="hi-top">
+          <div class="hi-title">三采区作业面照明不足</div>
+          <span class="tag tag-orange">中等</span>
+        </div>
+        <div class="hi-bottom">
+          <span class="hi-meta">📍 三采区掘进面</span>
+          <span class="hi-meta">👤 刘辉</span>
+          <span class="tag tag-orange">整改中</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Timeline -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">今日事件记录</h3>
+      <button class="more-btn">全部 →</button>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot red"></div>
+          <div>
+            <div class="tl-time">07:12</div>
+            <div class="tl-text"><strong>二采区皮带防护罩脱落</strong>，已停机围挡，维修中 <span class="tag tag-red" style="margin-left:4px;">高危</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot orange"></div>
+          <div>
+            <div class="tl-time">08:30</div>
+            <div class="tl-text">主井配电室专项巡检发现电缆绑扎松脱，已通知整改</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot blue"></div>
+          <div>
+            <div class="tl-time">09:05</div>
+            <div class="tl-text">三班早班安全培训完成，参与 48 人，出勤率 100%</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div>
+            <div class="tl-time">11:45</div>
+            <div class="tl-text">储煤场扬尘隐患整改验收通过，YH-0330-008 已闭合 <span class="tag tag-green" style="margin-left:4px;">闭合</span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div>
+            <div class="tl-time">14:30</div>
+            <div class="tl-text">副井候梯室安全出口灯更换完成，YH-0330-007 闭合</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inspection -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">今日巡检</h3>
+    </div>
+    <div class="inspect-card">
+      <div class="ic-grid">
+        <div class="ic-item">
+          <div class="ic-label">计划点位</div>
+          <div class="ic-val">19</div>
+          <div class="ic-sub">覆盖 3 采区</div>
+        </div>
+        <div class="ic-item">
+          <div class="ic-label">完成点位</div>
+          <div class="ic-val" style="color:var(--green);">18</div>
+          <div class="ic-sub" style="color:var(--green);">94.7%</div>
+        </div>
+      </div>
+      <div class="prog-list">
+        <div class="prog-item">
+          <div class="prog-top"><span>一采区</span><span style="font-weight:600;">6/6</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--green);"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>二采区</span><span style="font-weight:600;">5/6</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:83%;background:var(--orange);"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>三采区</span><span style="font-weight:600;">7/7</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--green);"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compliance -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">合规检查</h3>
+    </div>
+    <div class="comp-list">
+      <div class="comp-item">
+        <span class="comp-icon">⛑️</span>
+        <span class="comp-name">个人防护用品</span>
+        <div class="comp-bar-wrap">
+          <div class="comp-bar"><div class="comp-fill" style="width:96%;background:var(--green);"></div></div>
+          <span class="comp-rate" style="color:var(--green);">96%</span>
+        </div>
+      </div>
+      <div class="comp-item">
+        <span class="comp-icon">🚧</span>
+        <span class="comp-name">安全围挡规范</span>
+        <div class="comp-bar-wrap">
+          <div class="comp-bar"><div class="comp-fill" style="width:100%;background:var(--green);"></div></div>
+          <span class="comp-rate" style="color:var(--green);">100%</span>
+        </div>
+      </div>
+      <div class="comp-item">
+        <span class="comp-icon">🔥</span>
+        <span class="comp-name">消防设施完好</span>
+        <div class="comp-bar-wrap">
+          <div class="comp-bar"><div class="comp-fill" style="width:89%;background:var(--orange);"></div></div>
+          <span class="comp-rate" style="color:var(--orange);">89%</span>
+        </div>
+      </div>
+      <div class="comp-item">
+        <span class="comp-icon">⚡</span>
+        <span class="comp-name">电气作业规范</span>
+        <div class="comp-bar-wrap">
+          <div class="comp-bar"><div class="comp-fill" style="width:82%;background:var(--orange);"></div></div>
+          <span class="comp-rate" style="color:var(--orange);">82%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="section">
+    <div class="section-header">
+      <h3 class="section-title">今日安全小结</h3>
+      <span class="tag tag-blue">AI 生成</span>
+    </div>
+    <div class="summary-card">
+      <div class="summary-heading">📋 综合评估</div>
+      今日整体安全形势稳定，<strong>未发生事故</strong>，连续无事故天数 286 天。二采区皮带机高危隐患（YH-0331-001）已停机围挡，请关注今日整改进展。储煤场及副井两项滞留隐患已完成闭合。<br><br>
+      <strong>明日重点：</strong>确认皮带机整改验收；安排电气专项检查，提升 82% 的合规率。
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="float-actions">
+    <button class="fab fab-ghost">📥 导出</button>
+    <button class="fab fab-primary">📤 发送日报</button>
+  </div>
+
+</div>
+
+<!-- Tabbar -->
+<div class="tabbar">
+  <div class="tab-item">
+    <div class="tab-icon">🏠</div>
+    <div class="tab-label">首页</div>
+  </div>
+  <div class="tab-item active">
+    <div class="tab-icon">📋</div>
+    <div class="tab-label">报告</div>
+  </div>
+  <div class="tab-item">
+    <div class="tab-icon">⚠️</div>
+    <div class="tab-label">隐患库</div>
+  </div>
+</div>
+</body>
+</html>
